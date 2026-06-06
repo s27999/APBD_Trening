@@ -1,0 +1,12 @@
+﻿Trzeba zrobić connection Stringa
+
+Trzeba dodać biblioteki: EntityFrameworkCore.Design (Wybierz wersję taką jak SDK), EntityFrameworkCore.SqlServer (To zależne od bazy jaka koncowka)
+
+Diabelstwo jakby ci serwer nie działał
+"DefaultConnection": "Server=localhost\\SQLEXPRESS01;Database=apbd;Trusted_Connection=True;TrustServerCertificate=True;"
+
+Aby tabele powstały musisz użyć dotnet ef w terminalu, instalowanie dotnet ef - dotnet tool install --global dotnet-ef.
+dotnet ef migrations add Init - taki jakby commit
+dotnet ef database update - taki jakby push
+
+35:19 skonczyłeś oglądać

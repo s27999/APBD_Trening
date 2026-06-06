@@ -1,0 +1,9 @@
+Folder konfiguracje jest aby w AppDbContext nie było pełno kodu.
+
+Klasa musi dziedziczyć po IEntityTypeConfiguration
+
+Konfigurację potem do AppDbContext dodajemy przez 
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly); 
+Raz, bo żeby oddzielnie każdą klasę konfigurować trzeba by było zrobić np 
+    modelBuilder.ApplyConfigurationsFromAssembly(new ComponentConfiguration())
+I dla wszystkich klas Configuration coś takiego robić - bezsens
