@@ -24,3 +24,14 @@ W oknie Object Explorer (po lewej stronie) kliknij prawym przyciskiem myszy na n
 Na samej górze zobaczysz pole Name (nazwa bazy), a w sekcji połączenia nazwę serwera.
 
 Możesz też kliknąć prawym przyciskiem myszy na główną nazwę serwera (na samej górze drzewka), wybrać Properties i w zakładce General skopiować dokładną nazwę z pola Name.
+
+
+
+git clone <URL_STAREGO_REPO>
+rm -rf .git (WAZNE - tylko jesli zmieni sie repo czy cos)
+git init
+git add .
+git commit -m "init"
+git branch -M main
+git remote add origin <URL_NOWEGO_REPO_SKOPIOWANY_W_KROKU_3>
+git push -u origin main
