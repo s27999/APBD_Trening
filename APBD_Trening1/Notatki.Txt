@@ -1,6 +1,7 @@
 ﻿Trzeba zrobić connection Stringa
 
 Trzeba dodać biblioteki: EntityFrameworkCore.Design (Wybierz wersję taką jak SDK), EntityFrameworkCore.SqlServer (To zależne od bazy jaka koncowka)
+Jeszcze swagger UI
 
 Diabelstwo jakby ci serwer nie działał
 "DefaultConnection": "Server=localhost\\SQLEXPRESS01;Database=apbd;Trusted_Connection=True;TrustServerCertificate=True;"
@@ -10,3 +11,16 @@ dotnet ef migrations add Init - taki jakby commit
 dotnet ef database update - taki jakby push
 
 35:19 skonczyłeś oglądać
+
+
+Connection string:
+Sposób 1: Najszybszy (Przez SQL Server Management Studio - SSMS)
+Jeśli używasz SSMS do zarządzania bazą danych:
+
+Połącz się ze swoją bazą w SSMS.
+
+W oknie Object Explorer (po lewej stronie) kliknij prawym przyciskiem myszy na nazwę swojej bazy danych i wybierz Properties (Właściwości).
+
+Na samej górze zobaczysz pole Name (nazwa bazy), a w sekcji połączenia nazwę serwera.
+
+Możesz też kliknąć prawym przyciskiem myszy na główną nazwę serwera (na samej górze drzewka), wybrać Properties i w zakładce General skopiować dokładną nazwę z pola Name.
