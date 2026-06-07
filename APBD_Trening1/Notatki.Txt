@@ -10,9 +10,8 @@ Aby tabele powstały musisz użyć dotnet ef w terminalu, instalowanie dotnet ef
 dotnet ef migrations add Init - taki jakby commit
 dotnet ef database update - taki jakby push
 
-35:19 skonczyłeś oglądać
 
-
+-------------------------------------------------------------------------------
 Connection string:
 Sposób 1: Najszybszy (Przez SQL Server Management Studio - SSMS)
 Jeśli używasz SSMS do zarządzania bazą danych:
@@ -26,12 +25,73 @@ Na samej górze zobaczysz pole Name (nazwa bazy), a w sekcji połączenia nazwę
 Możesz też kliknąć prawym przyciskiem myszy na główną nazwę serwera (na samej górze drzewka), wybrać Properties i w zakładce General skopiować dokładną nazwę z pola Name.
 
 
+-- NOWE
 
+Oto jak krok po kroku sprawdzić i zbudować odpowiedni ciąg połączenia na nowym urządzeniu:
+
+1. Zrozumienie szablonu
+Zasadniczo na nowym urządzeniu (jeśli to wciąż środowisko deweloperskie Windows) Twój szablon będzie wyglądał tak:
+Server=[TWÓJ_SERWER];Database=[NAZWA_BAZY];Trusted_Connection=True;TrustServerCertificate=True
+
+Musisz podmienić tylko wartość [TWÓJ_SERWER] oraz [NAZWA_BAZY].
+
+2. Jak znaleźć nazwę serwera ([TWÓJ_SERWER])?
+To najczęściej sprawia problemy. Zależy to od tego, co dokładnie zostało zainstalowane na nowym urządzeniu. Masz kilka sposobów, aby to namierzyć:
+
+Sposób A: Przez SQL Server Management Studio (SSMS) (Najprostszy)
+
+Uruchom program SSMS na nowym komputerze.
+
+Od razu pojawi się okienko "Connect to Server".
+
+Spójrz na pole Server name. To, co tam widzisz (np. .\SQLEXPRESS, DESKTOP-XYZ\SQLEXPRESS, (localdb)\MSSQLLocalDB lub po prostu .), to Twoja docelowa wartość dla Server=....
+
+Sposób B: Sprawdzenie usług systemu Windows (Dla pełnego SQL Server lub Express)
+
+Wciśnij na klawiaturze Win + R, wpisz services.msc i wciśnij Enter.
+
+Na liście poszukaj usług zaczynających się od SQL Server.
+
+Zwróć uwagę na to, co jest w nawiasie obok nazwy:
+
+Jeśli widzisz SQL Server (SQLEXPRESS), Twoim serwerem jest localhost\SQLEXPRESS (lub .\SQLEXPRESS).
+
+Jeśli widzisz SQL Server (MSSQLSERVER), masz domyślną instancję. Twoim serwerem jest po prostu localhost (lub kropka .).
+
+Sposób C: Wiersz poleceń (Dla LocalDB)
+Wielu deweloperów używających Visual Studio korzysta z odchudzonej wersji LocalDB, która instaluje się z Visual Studio.
+
+Otwórz wiersz poleceń (cmd) lub PowerShell.
+
+Wpisz komendę: sqllocaldb info
+
+Jeśli zobaczysz na liście np. MSSQLLocalDB, Twój serwer to (localdb)\MSSQLLocalDB.
+
+3. Co wpisać w Database?
+Tutaj sprawa jest prosta. Jeśli używasz EF Core i mechanizmu Migracji (Migrations), to baza danych na nowym komputerze jeszcze nie istnieje.
+W polu Database= wpisujesz po prostu nazwę, jaką chcesz, aby Twoja aplikacja utworzyła na nowym sprzęcie (np. Database=MojaAplikacjaDb). Następnie po uruchomieniu komendy Update-Database w konsoli (lub po wywołaniu context.Database.Migrate() w kodzie), EF Core sam stworzy tę bazę na wskazanym serwerze.
+
+Przykłady najpopularniejszych Connection Stringów deweloperskich:
+Dla SQL Server Express (domyślna instalacja):
+"Server=.\\SQLEXPRESS;Database=NazwaBazy;Trusted_Connection=True;TrustServerCertificate=True"
+
+Dla LocalDB (częste w Visual Studio):
+"Server=(localdb)\\MSSQLLocalDB;Database=NazwaBazy;Trusted_Connection=True;TrustServerCertificate=True"
+
+Dla pełnego SQL Server Developer Edition:
+"Server=localhost;Database=NazwaBazy;Trusted_Connection=True;TrustServerCertificate=True"
+--------------------------------------------------------------------------------
+
+
+--Git
+----------------------------------------------------------------------------
 git clone <URL_STAREGO_REPO>
 rm -rf .git (WAZNE - tylko jesli zmieni sie repo czy cos)
 git init
 git add .
 git commit -m "init"
 git branch -M main
+
+------------------------------------------------------------------------------
 git remote add origin <URL_NOWEGO_REPO_SKOPIOWANY_W_KROKU_3>
 git push -u origin main
